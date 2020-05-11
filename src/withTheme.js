@@ -19,32 +19,24 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true,
     h1: {
       fontSize: 50,
       lineHeight: 1.15,
-      color: '#5b666b',
+      color: '#2a2a2a',
     },
     h2: {
       fontSize: `24px !important`,
       lineHeight: 1.15,
-      color: '#343b3e',
+      color: '#2a2a2a',
       position: 'relative',
-      fontWeight: 400,
-      marginBottom: 16,
-      '&::before': {
-        content: `''`,
-        position: 'absolute',
-        width: '40%',
-        height: 3,
-        background: '#a73351',
-        bottom: -16
-      }
+      fontWeight: 500,
+      marginBottom: 16
     },
     h3: {
       fontSize: 20,
       lineHeight: 1.15,
-      color: '#303238',
+      color: '#0d0d0d',
+      marginLeft: 8
     },
     h6: {
       fontSize: 20,
@@ -52,14 +44,6 @@ const theme = createMuiTheme({
       color: '#303238',
       position: 'relative',
       fontWeight: 500,
-      '&::before': {
-        content: `''`,
-        position: 'absolute',
-        width: '40%',
-        height: 3,
-        background: '#a73351',
-        bottom: -16
-      }
     },
   },
   shadows: ['none'].concat(map(Array(25), () => `0 2px 14px 0 #e3e8fb`)),

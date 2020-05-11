@@ -30,7 +30,6 @@ export const MenuDrawer = withRouter(
 
       render() {
         const { classes, location, open } = this.props;
-
         return (
           <Drawer
             className={classes.drawer}

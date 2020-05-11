@@ -87,4 +87,23 @@ export class Player {
 
     return res.json();
   }
+
+  static async search({ playerId, seasonName }) {
+    const res = await Fetch.get(`/search?playerId=${playerId}&seasonName=${seasonName}`);
+    if (res.status >= 300) {
+      throw Error('Bad Request');
+    }
+
+    return res.json();
+  }
+
+  static async autoComplete({ name }) {
+    console.log(name)
+    const res = await Fetch.get(`/autocomplete?q=${name}`);
+    if (res.status >= 300) {
+      throw Error('Bad Request');
+    }
+
+    return res.json();
+  }
 }
