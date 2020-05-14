@@ -1,4 +1,7 @@
 export const styles = theme => ({
+    logo: {
+        fontWeight: '700 !important',
+    },
     header: {
         width: '80%',
         margin: 'auto',

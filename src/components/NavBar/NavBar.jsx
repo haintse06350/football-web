@@ -24,7 +24,7 @@ export const NavBar = withStyles(styles)(
       return (
         <div className={classes.header}>
           <div className={classes.logoBanner}>
-            <Typography variant="h2">Football Data</Typography>
+            <Typography variant="h2" className={classes.logo}>Football Data</Typography>
           </div>
           <div className={classes.menu}>
             <Link href='/products'

@@ -25,7 +25,7 @@ const theme = createMuiTheme({
       color: '#2a2a2a',
     },
     h2: {
-      fontSize: `24px !important`,
+      fontSize: `24px`,
       lineHeight: 1.15,
       color: '#2a2a2a',
       position: 'relative',
@@ -33,10 +33,11 @@ const theme = createMuiTheme({
       marginBottom: 16
     },
     h3: {
-      fontSize: 20,
+      fontSize: 15,
       lineHeight: 1.15,
       color: '#0d0d0d',
-      marginLeft: 8
+      marginLeft: 8,
+      fontWeight: 700
     },
     h6: {
       fontSize: 20,

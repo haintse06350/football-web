@@ -1,9 +1,9 @@
 import React from 'react';
 import { withStyles, Typography, Paper, TextField, MenuItem, CircularProgress, ClickAwayListener } from '@material-ui/core';
 import { styles } from './Search.style';
-import classnames from 'classnames';
+import { PlayerPage } from '../PlayerPage';
 import { Player } from '../../models/players';
-import { debounce, map } from 'lodash';
+import { debounce, map, isNull } from 'lodash';
 import Downshift from 'downshift';
 
 export const Search = withStyles(styles)(
@@ -17,7 +17,9 @@ export const Search = withStyles(styles)(
         suggestions: null,
         isOpen: false,
         isLoading: false,
-        selectedItem: null
+        selectedItem: null,
+        playerId: null,
+        player: null
       };
       this.getAutocomplete = debounce(this.getAutocomplete, 500);
     }
@@ -31,16 +33,31 @@ export const Search = withStyles(styles)(
     getAutocomplete = async () => {
       const { query } = this.state;
       try {
-        const players = await Player.autoComplete({ name: query });
-        this.setState({ suggestions: players, isLoading: false });
+        if (query === '') {
+          this.setState({ isLoading: false, isOpen: false, player: null })
+        } else {
+          this.setState({ player: null });
+          const players = await Player.autoComplete({ name: query });
+          this.setState({ suggestions: players, isLoading: false });
+        }
       } catch (e) {
-        // alert('server error');
+        alert('server error');
+      }
+    }
+
+    getPlayerDetails = async () => {
+      const { playerId } = this.state;
+      try {
+        const player = await Player.search({ playerId });
+        this.setState({ player });
+      } catch (e) {
+        alert('server error');
       }
     }
 
     onChangeMenuItem = (option) => {
-      this.setState({ query: option.name, isOpen: false }, () => {
-        // this.props.onChangeSearchField(this.state.query);
+      this.setState({ query: option.name, isOpen: false, playerId: option.playerId }, () => {
+        this.getPlayerDetails();
       });
     };
 
@@ -50,7 +67,7 @@ export const Search = withStyles(styles)(
 
     render() {
       const { classes } = this.props;
-      const { query, suggestions, isOpen, selectedItem, isLoading } = this.state;
+      const { query, suggestions, isOpen, selectedItem, isLoading, player } = this.state;
       return (
         <div className={classes.searchBox}>
           <ClickAwayListener onClickAway={this.onClickAway}>
@@ -87,7 +104,7 @@ export const Search = withStyles(styles)(
                                   onClick={() =>
                                     this.onChangeMenuItem(suggestion)}
                                 >
-                                  <img src={suggestion.image} width={50} />
+                                  <img src={suggestion.image} width={50} alt='' />
                                   {suggestion.name}
                                 </MenuItem>
                               ))}
@@ -121,6 +138,7 @@ export const Search = withStyles(styles)(
               </Downshift>
             </div>
           </ClickAwayListener>
+          {!isNull(player) && <PlayerPage player={player} />}
         </div>
       )
     }
