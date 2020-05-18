@@ -6,7 +6,7 @@ export const styles = (theme) => ({
     },
 
     searchBox: {
-        width: '60%',
+        width: '40%',
         margin: 'auto',
         marginTop: 50
     },
@@ -41,5 +41,6 @@ export const styles = (theme) => ({
         padding: '4px 16px',
         display: 'flex',
         alignItems: 'center'
-    }
+    },
+
 });

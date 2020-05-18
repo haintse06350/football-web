@@ -25,7 +25,7 @@ export const Search = withStyles(styles)(
     }
 
     onInputChange = (e) => {
-      this.setState({ query: e.target.value, isOpen: true, isLoading: true }, () => {
+      this.setState({ query: e.target.value, isOpen: true, isLoading: true, suggestions: null, player: null }, () => {
         this.getAutocomplete();
       })
     }
@@ -69,75 +69,79 @@ export const Search = withStyles(styles)(
       const { classes } = this.props;
       const { query, suggestions, isOpen, selectedItem, isLoading, player } = this.state;
       return (
-        <div className={classes.searchBox}>
-          <ClickAwayListener onClickAway={this.onClickAway}>
-            <div className={classes.suggestions}>
-              <Downshift id="downshift-simple">
-                {({ getInputProps }) => {
-                  return (
-                    <div className={classes.container}>
-                      <TextField
-                        className={classes.input}
-                        fullWidth={true}
-                        InputProps={{
-                          disableUnderline: true,
-                          classes: {
-                            input: classes.inputBase
-                          },
-                          onChange: this.onInputChange
-                        }}
-                        onKeyDown={this.onKeyDownPaper}
-                        value={query}
-                        placeholder="Type a player's name..."
-                      />
-                      {
-                        isOpen && (
-                          <div>
-                            <Paper
-                              onKeyDown={this.onKeyDownPaper}
-                              className={classes.paper}
-                              square
-                            >
-                              {map(suggestions, (suggestion, i) => (
-                                <MenuItem
-                                  selected={suggestion === selectedItem}
-                                  onClick={() =>
-                                    this.onChangeMenuItem(suggestion)}
-                                >
-                                  <img src={suggestion.image} width={50} alt='' />
-                                  {suggestion.name}
-                                </MenuItem>
-                              ))}
-                              {!isLoading &&
-                                suggestions !== null &&
-                                suggestions.length === 0 && (
-                                  <Typography className={classes.loading}>
-                                    No results
-                                  </Typography>
-                                )}
-                              {isLoading && (
-                                <div>
-                                  <Typography className={classes.loading}>
-                                    <CircularProgress
-                                      size={18}
-                                      color={'primary'}
-                                    />
-                                    <Typography style={{ marginLeft: '8px' }}>
-                                      loading...
+        <div>
+          <div className={classes.searchBox}>
+            <ClickAwayListener onClickAway={this.onClickAway}>
+              <div className={classes.suggestions}>
+                <Downshift id="downshift-simple">
+                  {({ getInputProps }) => {
+                    return (
+                      <div className={classes.container}>
+                        <TextField
+                          className={classes.input}
+                          fullWidth={true}
+                          id='player'
+                          name='player'
+                          InputProps={{
+                            disableUnderline: true,
+                            classes: {
+                              input: classes.inputBase
+                            },
+                            onChange: this.onInputChange
+                          }}
+                          onKeyDown={this.onKeyDownPaper}
+                          value={query}
+                          placeholder="Type a player's name..."
+                        />
+                        {
+                          isOpen && (
+                            <div>
+                              <Paper
+                                onKeyDown={this.onKeyDownPaper}
+                                className={classes.paper}
+                                square
+                              >
+                                {map(suggestions, (suggestion, i) => (
+                                  <MenuItem
+                                    selected={suggestion === selectedItem}
+                                    onClick={() =>
+                                      this.onChangeMenuItem(suggestion)}
+                                  >
+                                    <img src={suggestion.image} width={50} alt='' />
+                                    {suggestion.name}
+                                  </MenuItem>
+                                ))}
+                                {!isLoading &&
+                                  suggestions !== null &&
+                                  suggestions.length === 0 && (
+                                    <Typography className={classes.loading}>
+                                      No results
+                                    </Typography>
+                                  )}
+                                {isLoading && (
+                                  <div>
+                                    <Typography className={classes.loading}>
+                                      <CircularProgress
+                                        size={18}
+                                        color={'primary'}
+                                      />
+                                      <Typography style={{ marginLeft: '8px' }}>
+                                        loading...
                               </Typography>
-                                  </Typography>
-                                </div>
-                              )}
-                            </Paper>
-                          </div>
-                        )
-                      }
-                    </div>
-                  )
-                }}
-              </Downshift>
-            </div>
-          </ClickAwayListener>
+                                    </Typography>
+                                  </div>
+                                )}
+                              </Paper>
+                            </div>
+                          )
+                        }
+                      </div>
+                    )
+                  }}
+                </Downshift>
+              </div>
+            </ClickAwayListener>
+          </div>
           {!isNull(player) && <PlayerPage player={player} />}
         </div>
       )

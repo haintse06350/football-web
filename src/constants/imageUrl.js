@@ -23,3 +23,7 @@ export const miniField = () => {
 export const trophyUrl = (id) => {
   return `${PATH_S3_BUCKET}/upload/title/image/large/${id}.png`
 }
+
+export const tournamentUrl = (name) => {
+  return `${PATH_S3_BUCKET}/upload/tournament/logo/large/${name}.png`
+}

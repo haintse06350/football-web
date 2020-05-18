@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { DashboardLayout } from './components/DashboardLayout';
-import { LineChartPage } from './pages/LineChart';
+import { GlobalStyles } from './components/GlobalStyles';
 import withTheme from './withTheme';
-import { Header } from './pages/Header';
+import { SearchHeader } from './pages/SearchHeader';
+import { Layout } from './components/Layout';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
@@ -22,12 +22,15 @@ export const App = withTheme(class extends Component {
             <Redirect to="/" />
           </Switch>
         </DashboardLayout> */}
-        <Switch>
-          <Route path="/products" component={Header} />
-          <Route path="/pricings" component={Header} />
-          <Route path="/contact" component={Header} />
-          <Route path="/" component={Header} />
-        </Switch>
+        <Layout>
+          <GlobalStyles />
+          <Switch>
+            <Route path="/products" component={SearchHeader} />
+            <Route path="/pricings" component={SearchHeader} />
+            <Route path="/contact" component={SearchHeader} />
+            <Route path="/" component={SearchHeader} />
+          </Switch>
+        </Layout>
       </Router>
     )
   }
